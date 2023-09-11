@@ -1,6 +1,19 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import React from "react";
+import { SessionProvider } from "next-auth/react";
+import { AppProps } from "next/app"; // Import the AppProps type
+import NavMenu from "@/components/NavMenu";
+import '../styles/globals.css'
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+
+function App({ Component, pageProps }: AppProps) {
+  const { session, ...restPageProps } = pageProps; // Destructure session and restPageProps
+
+  return (
+    <SessionProvider session={session}>
+      <NavMenu />
+      <Component {...restPageProps} />
+    </SessionProvider>
+  );
 }
+
+export default App;
